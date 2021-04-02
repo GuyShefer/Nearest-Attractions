@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Amadeus from 'amadeus'
 import Attraction from './Attraction';
 import './Main.css'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import Map from './Map';
+import { Link } from 'react-router-dom';
 
 const Main = () => {
     const [userLocation, setUserLocation] = useState({});
@@ -23,9 +24,9 @@ const Main = () => {
                     longitude: userLocation.longitude,
                     radius: 20,
                 })
-                localStorage.setItem('attarctions', JSON.stringify(response))
+                localStorage.setItem('attarctions', JSON.stringify(response));
             } else {
-                response = JSON.parse(response)
+                response = JSON.parse(response);
             }
 
             setAttractions(response.data)
@@ -37,6 +38,7 @@ const Main = () => {
     const getUserLocation = () => {
         "geolocation" in navigator ?
             navigator.geolocation.getCurrentPosition((position) => {
+                console.log(position)
                 setUserLocation({
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
@@ -47,20 +49,19 @@ const Main = () => {
 
 
     return (<>
-        
-        {Object.keys(userLocation).length !== 0 ?
-            <MapContainer center={[userLocation.latitude, userLocation.longitude]} zoom={13} scrollWheelZoom={false}>
-                <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <Marker position={[userLocation.latitude, userLocation.longitude]}>
-                    <Popup>You Are Here!</Popup>
-                </Marker>
-            </MapContainer>
-            :
-            null
-        }
+        <div className="vactions-container">
+            <div className="search search-flight"><Link to="/flight">Search A Flight</Link></div>
+            <div className="search search-hotel">Seach Hotel</div>
+            <div className="search search-atrractions">Seach For Attractions</div>
+        </div>
+
+        <div className="map-container">
+            {Object.keys(userLocation).length !== 0 ?
+                <Map userLocation={userLocation} /> :
+                null
+            }
+        </div>
+
         <div className="attraction-container">
             {attractions.map(attraction => {
                 return <Attraction key={attraction.id} attraction={attraction} />

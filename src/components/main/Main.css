@@ -20,6 +20,11 @@
     justify-content: center;
 }
 
+.map-container{
+    display: flex;
+    justify-content: center;
+}
+
 .leaflet-container {
     width: 60vw;
     height: 50vh;
