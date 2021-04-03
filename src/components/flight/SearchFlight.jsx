@@ -1,73 +1,65 @@
 import React, { useEffect, useState } from 'react'
 import InputLocationAirpot from './InputLocationAirpot';
-import amadeus from '../../utilities/amadeus'
+import amadeus from '../../utilities/amadeus';
+import Button from '@material-ui/core/Button';
+import Spinner from '../Spinner/Spinner';
 
 const SearchFlight = () => {
 
-    const [userFlightDetails, setUserFlightDetails] = useState(
-        { originCode: '', destinationCode: '', departureDate: '', returnDate: '', adults: '1' }
-    );
-
+    const [userFlightDetails, setUserFlightDetails] = useState([{ originCode: '', destinationCode: '', departureDate: '', returnDate: '', adults: 1 }]);
+    const [showSpinner, setShowSpinner] = useState(false);
 
     useEffect(() => {
-        // getFlights();
-        console.log(userFlightDetails)
+        console.log('spinner', showSpinner);
+       
     })
 
     const getFlights = async () => {
-    //     let flightsResponse = localStorage.getItem('flights');
-    //     if (!flightsResponse) {
-            const flightsResponse = await amadeus.shopping.flightOffersSearch.get({
-                originLocationCode: userFlightDetails.originCode,
-                destinationLocationCode: userFlightDetails.destinationCode,
-                departureDate: userFlightDetails.departureDate,
-                returnDate: userFlightDetails.returnDate,
-                adults: userFlightDetails.adults,
-            })
-            // localStorage.setItem('flights', JSON.stringify(flightsResponse));
-        // } else {
-        //     flightsResponse = JSON.parse(flightsResponse);
-        // }
+        setShowSpinner(true);
+        const flightsResponse = await amadeus.shopping.flightOffersSearch.get({
+            originLocationCode: userFlightDetails[0].originCode,
+            destinationLocationCode: userFlightDetails[0].destinationCode,
+            departureDate: userFlightDetails[0].departureDate,
+            returnDate: userFlightDetails[0].returnDate,
+            adults: userFlightDetails[0].adults,
+            max: 30,
+        })
+        setShowSpinner(false);
+        console.log(flightsResponse.data.length)
         console.log(flightsResponse.data)
     }
 
     //////////////
 
     const setOriginLocation = (code) => {
-        let flightDetails = userFlightDetails;
+        let flightDetails = userFlightDetails[0];
         flightDetails.originCode = code;
-        console.log(code);
-        setUserFlightDetails(userFlightDetails)
+        setUserFlightDetails([flightDetails])
     }
 
     const setdestinationLocation = (code) => {  // duplicate
-        let flightDetails = userFlightDetails;
+        let flightDetails = userFlightDetails[0];
         flightDetails.destinationCode = code;
-        console.log(code);
-        setUserFlightDetails(userFlightDetails)
+        setUserFlightDetails([flightDetails])
     }
 
     const handleDepartDate = (e) => { // duplicate
-        let flightDetails = userFlightDetails;
+        let flightDetails = userFlightDetails[0];
         flightDetails.departureDate = e.target.value;
-        console.log(e.target.value);
-        setUserFlightDetails(userFlightDetails)
+        setUserFlightDetails([flightDetails])
     }
 
     const handleReturnDate = (e) => {
-        let flightDetails = userFlightDetails;
+        let flightDetails = userFlightDetails[0];
         flightDetails.returnDate = e.target.value;
-        console.log(e.target.value);
-        setUserFlightDetails(userFlightDetails)
+        setUserFlightDetails([flightDetails])
     }
 
     const handleAdultsInput = (e) => {
-        let flightDetails = userFlightDetails;
-        flightDetails.adults = e.target.value;
-        console.log(e.target.value);
-        setUserFlightDetails(userFlightDetails)
+        let flightDetails = userFlightDetails[0];
+        flightDetails.adults = Number(e.target.value);
+        setUserFlightDetails([flightDetails])
     }
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -79,27 +71,41 @@ const SearchFlight = () => {
 
     return (
         <>
-            {console.log(userFlightDetails)}
+        
             <div className="flight-container">
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="from">From </label>
-                    <InputLocationAirpot input={'from'} setLocation={setOriginLocation} />
+                <form onSubmit={handleSubmit} className="form">
+                { showSpinner ? <div> <Spinner/> </div> : null}
+                    <div className="banner">
+                        <h2>Let the journey begin</h2>
+                    </div>
 
-                    <label htmlFor="to">To </label>
-                    <InputLocationAirpot input={'to'} setLocation={setdestinationLocation} />
+                    <div className="fligt-input-container">
+                        <label htmlFor="from">From </label>
+                        <InputLocationAirpot input={'from'} setLocation={setOriginLocation} />
+                    </div>
 
-                    <label htmlFor="depart">Depart </label>
-                    <input type="date" onChange={handleDepartDate} />
+                    <div className="fligt-input-container">
+                        <label htmlFor="from">To </label>
+                        <InputLocationAirpot input={'to'} setLocation={setdestinationLocation} />
+                    </div>
 
-                    <label htmlFor="depart">Return </label>
-                    <input type="date" onChange={handleReturnDate} />
+                    <div className="fligt-input-container">
+                        <label htmlFor="depart">Depart </label>
+                        <input className="flight-input" type="date" onChange={handleDepartDate} />
+                    </div>
 
-                    <label htmlFor="adults">Adults </label>
-                    <input type="number" min="1" value="1" onChange={handleAdultsInput} />
+                    <div className="fligt-input-container">
+                        <label htmlFor="depart">Return </label>
+                        <input className="flight-input" type="date" onChange={handleReturnDate} />
+                    </div>
 
-                    <input type="submit" value="submit" />
+                    <div className="fligt-input-container">
+                        <label htmlFor="adults">Adults </label>
+                        <input className="flight-input" type="number" min="1" value={userFlightDetails[0].adults} onChange={handleAdultsInput} />
+                    </div>
+
+                    <Button variant="outlined" type="submit" value="Search" >SEARCH</Button>
                 </form>
-
 
             </div>
         </>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Apca from '../../utilities/apca'
+import Apca from '../../utilities/apca';
+
 
 const InputLocationAirpot = ({ setLocation, input }) => {
 
@@ -28,7 +29,7 @@ const InputLocationAirpot = ({ setLocation, input }) => {
 
     return (
         <>
-            <input placeholder="Airport" list={input} onKeyPress={handleLocalInput} onSelect={handleUserLocalLocation} />
+            <input placeholder="Airport" className="flight-input" list={input} onKeyPress={handleLocalInput} onSelect={handleUserLocalLocation} />
             <datalist id={input}>
                 {airports.map(airport => <option key={airport.iata} value={[airport.name, airport.iata]} iata={airport.iata} />)}
             </datalist>
