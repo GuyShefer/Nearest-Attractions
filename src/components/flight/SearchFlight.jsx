@@ -3,30 +3,51 @@ import InputLocationAirpot from './InputLocationAirpot';
 import amadeus from '../../utilities/amadeus';
 import Button from '@material-ui/core/Button';
 import Spinner from '../Spinner/Spinner';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
+import { useHistory } from "react-router-dom";
 
 const SearchFlight = () => {
 
     const [userFlightDetails, setUserFlightDetails] = useState([{ originCode: '', destinationCode: '', departureDate: '', returnDate: '', adults: 1 }]);
     const [showSpinner, setShowSpinner] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
+    const [modalText, setModalText] = useState('');
+    const history = useHistory();
 
-    useEffect(() => {
-        console.log('spinner', showSpinner);
-       
-    })
+    // useEffect(() => {
+    //     console.log('spinner', showSpinner);
+
+    // })
 
     const getFlights = async () => {
         setShowSpinner(true);
-        const flightsResponse = await amadeus.shopping.flightOffersSearch.get({
-            originLocationCode: userFlightDetails[0].originCode,
-            destinationLocationCode: userFlightDetails[0].destinationCode,
-            departureDate: userFlightDetails[0].departureDate,
-            returnDate: userFlightDetails[0].returnDate,
-            adults: userFlightDetails[0].adults,
-            max: 30,
-        })
-        setShowSpinner(false);
-        console.log(flightsResponse.data.length)
-        console.log(flightsResponse.data)
+        let flightsResponse;
+        try {
+            flightsResponse = await amadeus.shopping.flightOffersSearch.get({
+                originLocationCode: userFlightDetails[0].originCode,
+                destinationLocationCode: userFlightDetails[0].destinationCode,
+                departureDate: userFlightDetails[0].departureDate,
+                returnDate: userFlightDetails[0].returnDate,
+                adults: userFlightDetails[0].adults,
+                max: 30,
+            })
+            if(flightsResponse.data.length === 0 ){
+                setModalText("There are no flights according to the details entered, let's try other details");
+                setOpenModal(true)
+            } else {
+                console.log(flightsResponse.data);
+                history.push("/flights-data",flightsResponse.data);
+            }
+
+        } catch (err) {
+            setModalText('Something wrong please try again')
+            setOpenModal(true)
+        } finally {
+            setShowSpinner(false);
+        }
+
     }
 
     //////////////
@@ -61,20 +82,33 @@ const SearchFlight = () => {
         setUserFlightDetails([flightDetails])
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e) => { // change it to get flights
         e.preventDefault();
         console.log('submit');
         console.log(userFlightDetails);
         getFlights();
     }
 
+    const handleClose = () => {
+        setOpenModal(false);
+    };
+
+
 
     return (
         <>
-        
+            <div>
+                <Dialog open={openModal} onClose={handleClose} aria-labelledby="alert-dialog-title">
+                    <DialogTitle id="alert-dialog-title">{modalText}</DialogTitle>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary">Okey</Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+
             <div className="flight-container">
                 <form onSubmit={handleSubmit} className="form">
-                { showSpinner ? <div> <Spinner/> </div> : null}
+                    {showSpinner ? <div> <Spinner /> </div> : null}
                     <div className="banner">
                         <h2>Let the journey begin</h2>
                     </div>
