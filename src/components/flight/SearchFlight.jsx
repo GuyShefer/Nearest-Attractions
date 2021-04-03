@@ -11,6 +11,8 @@ import { useHistory } from "react-router-dom";
 const SearchFlight = () => {
 
     const [userFlightDetails, setUserFlightDetails] = useState([{ originCode: '', destinationCode: '', departureDate: '', returnDate: '', adults: 1 }]);
+    const [departureAirPort, setDepartureAirPort] = useState('');
+    const [destinationAirPort, setDestinationAirPort] = useState('');
     const [showSpinner, setShowSpinner] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [modalText, setModalText] = useState('');
@@ -31,14 +33,16 @@ const SearchFlight = () => {
                 departureDate: userFlightDetails[0].departureDate,
                 returnDate: userFlightDetails[0].returnDate,
                 adults: userFlightDetails[0].adults,
+                nonStop: true,
                 max: 30,
             })
-            if(flightsResponse.data.length === 0 ){
+            if (flightsResponse.data.length === 0) {
                 setModalText("There are no flights according to the details entered, let's try other details");
                 setOpenModal(true)
             } else {
-                console.log(flightsResponse.data);
-                history.push("/flights-data",flightsResponse.data);
+                const propsArr = [flightsResponse.data, departureAirPort , destinationAirPort] ;
+                console.log(propsArr);
+                history.push("/flights-data", propsArr);
             }
 
         } catch (err) {
@@ -52,16 +56,18 @@ const SearchFlight = () => {
 
     //////////////
 
-    const setOriginLocation = (code) => {
+    const setOriginLocation = (airport, code) => {
         let flightDetails = userFlightDetails[0];
         flightDetails.originCode = code;
-        setUserFlightDetails([flightDetails])
+        setUserFlightDetails([flightDetails]);
+        setDepartureAirPort(airport);
     }
 
-    const setdestinationLocation = (code) => {  // duplicate
+    const setdestinationLocation = (airport, code) => {  // duplicate
         let flightDetails = userFlightDetails[0];
         flightDetails.destinationCode = code;
-        setUserFlightDetails([flightDetails])
+        setUserFlightDetails([flightDetails]);
+        setDestinationAirPort(airport);
     }
 
     const handleDepartDate = (e) => { // duplicate

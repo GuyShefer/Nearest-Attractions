@@ -20,7 +20,7 @@
 }
 
 .header , .footer {
-  height: 50px;
+  height: 10vh;
   border: 1px solid;
   font-size: 20px;
   background: forestgreen;
