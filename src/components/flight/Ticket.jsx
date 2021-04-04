@@ -13,9 +13,9 @@ const Ticket = (flight) => {
                     </header>
 
                     <main className="main-ticket">
-                        <div class="main-item">{flight.oridingCode}</div>
-                        <div class="main-item airplane-icon"></div>
-                        <div class="main-item">{flight.destinationCode}</div>
+                        <div className="main-item">{flight.oridingCode}</div>
+                        <div className="main-item airplane-icon"></div>
+                        <div className="main-item">{flight.destinationCode}</div>
                     </main>
 
                     <footer className="footer-ticket">

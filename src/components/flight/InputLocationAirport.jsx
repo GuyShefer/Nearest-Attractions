@@ -7,9 +7,8 @@ const InputLocationAirpot = ({ setLocation, input }) => {
     const [airports, setAirports] = useState([]);
 
     const handleUserInputLocation = (e) => {
-        // const iata = e.target.value.slice(e.target.value.indexOf(',') + 1)
         const inputArr = e.target.value.split(',');
-        setLocation(inputArr[0], inputArr[1]);
+        setLocation(inputArr[1]);
     }
 
     const handleLocalInput = async (e) => {
@@ -19,7 +18,6 @@ const InputLocationAirpot = ({ setLocation, input }) => {
         }
 
         Apca.onSuccess = (data) => {
-            // console.log(data.airports)
             setAirports(data.airports)
         };
 

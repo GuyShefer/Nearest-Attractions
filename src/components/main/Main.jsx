@@ -51,7 +51,7 @@ const Main = () => {
     return (<>
         <div className="vactions-container">
             <div className="search search-flight"><Link to="/flight">Search A Flight</Link></div>
-            <div className="search search-hotel">Seach Hotel</div>
+            <div className="search search-hotel"><Link to="/hotels">Seach Hotel</Link></div>
             <div className="search search-atrractions">Seach For Attractions</div>
         </div>
 

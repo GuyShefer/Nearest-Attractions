@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import InputLocationAirpot from './InputLocationAirpot';
+import React, { useState } from 'react'
+import InputLocationAirport from './InputLocationAirport';
 import amadeus from '../../utilities/amadeus';
 import Button from '@material-ui/core/Button';
 import Spinner from '../Spinner/Spinner';
@@ -10,9 +10,7 @@ import { useHistory } from "react-router-dom";
 
 const SearchFlight = () => {
 
-    const [userFlightDetails, setUserFlightDetails] = useState([{ originCode: '', destinationCode: '', departureDate: '', returnDate: '', adults: 1 }]);
-    const [departureAirPort, setDepartureAirPort] = useState(''); //
-    const [destinationAirPort, setDestinationAirPort] = useState(''); // 
+    const [userFlightDetails, setUserFlightDetails] = useState({ originCode: '', destinationCode: '', departureDate: '', returnDate: '', adults: 1 });
     const [showSpinner, setShowSpinner] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [modalText, setModalText] = useState('');
@@ -24,11 +22,11 @@ const SearchFlight = () => {
         let flightsResponse;
         try {
             flightsResponse = await amadeus.shopping.flightOffersSearch.get({
-                originLocationCode: userFlightDetails[0].originCode,
-                destinationLocationCode: userFlightDetails[0].destinationCode,
-                departureDate: userFlightDetails[0].departureDate,
-                returnDate: userFlightDetails[0].returnDate,
-                adults: userFlightDetails[0].adults,
+                originLocationCode: userFlightDetails.originCode,
+                destinationLocationCode: userFlightDetails.destinationCode,
+                departureDate: userFlightDetails.departureDate,
+                returnDate: userFlightDetails.returnDate,
+                adults: userFlightDetails.adults,
                 nonStop: true,
                 max: 30,
             })
@@ -36,9 +34,6 @@ const SearchFlight = () => {
                 setModalText("There are no flights according to the details entered, let's try other details");
                 setOpenModal(true)
             } else {
-                // const propsArr = [flightsResponse.data, departureAirPort , destinationAirPort] ;
-                // console.log(userFlightDetails[0].originCode);
-                // console.log(propsArr);
                 history.push("/flights-data", flightsResponse.data);
             }
 
@@ -53,50 +48,40 @@ const SearchFlight = () => {
 
     //////////////
 
-    const setOriginLocation = (airport, code) => {
-        let flightDetails = userFlightDetails[0];
+    const setOriginLocation = (code) => {
+        let flightDetails = {...userFlightDetails};
         flightDetails.originCode = code;
-        setUserFlightDetails([flightDetails]);
-        setDepartureAirPort(airport);
+        setUserFlightDetails(flightDetails)
     }
 
-    const setdestinationLocation = (airport, code) => {  // duplicate
-        let flightDetails = userFlightDetails[0];
+    const setdestinationLocation = (code) => {  // duplicate
+        let flightDetails = {...userFlightDetails};
         flightDetails.destinationCode = code;
-        setUserFlightDetails([flightDetails]);
-        setDestinationAirPort(airport);
+        setUserFlightDetails(flightDetails)
     }
 
     const handleDepartDate = (e) => { // duplicate
-        let flightDetails = userFlightDetails[0];
+        let flightDetails = {...userFlightDetails};
         flightDetails.departureDate = e.target.value;
-        setUserFlightDetails([flightDetails])
+        setUserFlightDetails(flightDetails)
     }
 
     const handleReturnDate = (e) => {
-        let flightDetails = userFlightDetails[0];
+        let flightDetails = {...userFlightDetails};
         flightDetails.returnDate = e.target.value;
-        setUserFlightDetails([flightDetails])
+        setUserFlightDetails(flightDetails)
     }
 
     const handleAdultsInput = (e) => {
-        let flightDetails = userFlightDetails[0];
+        let flightDetails = {...userFlightDetails};
         flightDetails.adults = Number(e.target.value);
-        setUserFlightDetails([flightDetails])
+        console.log(flightDetails);
+        setUserFlightDetails(flightDetails)
     }
-
-    // const handleSubmit = (e) => { // change it to get flights
-    //     e.preventDefault();
-    //     console.log('submit');
-    //     console.log(userFlightDetails);
-    //     getFlights();
-    // }
 
     const handleClose = () => {
         setOpenModal(false);
     };
-
-
 
     return (
         <>
@@ -104,7 +89,7 @@ const SearchFlight = () => {
                 <Dialog open={openModal} onClose={handleClose} aria-labelledby="alert-dialog-title">
                     <DialogTitle id="alert-dialog-title">{modalText}</DialogTitle>
                     <DialogActions>
-                        <Button onClick={handleClose} color="primary">Okey</Button>
+                        <Button onClick={handleClose} color="primary">Ok</Button>
                     </DialogActions>
                 </Dialog>
             </div>
@@ -116,29 +101,29 @@ const SearchFlight = () => {
                         <h2>Let the journey begin</h2>
                     </div>
 
-                    <div className="fligt-input-container">
+                    <div className="flight-input-container"> 
                         <label htmlFor="from">From </label>
-                        <InputLocationAirpot input={'from'} setLocation={setOriginLocation} />
+                        <InputLocationAirport input={'from'} setLocation={setOriginLocation} />
                     </div>
 
-                    <div className="fligt-input-container">
+                    <div className="flight-input-container">
                         <label htmlFor="from">To </label>
-                        <InputLocationAirpot input={'to'} setLocation={setdestinationLocation} />
+                        <InputLocationAirport input={'to'} setLocation={setdestinationLocation} />
                     </div>
 
-                    <div className="fligt-input-container">
+                    <div className="flight-input-container">
                         <label htmlFor="depart">Depart </label>
                         <input className="flight-input" type="date" onChange={handleDepartDate} />
                     </div>
 
-                    <div className="fligt-input-container">
+                    <div className="flight-input-container">
                         <label htmlFor="depart">Return </label>
                         <input className="flight-input" type="date" onChange={handleReturnDate} />
                     </div>
 
-                    <div className="fligt-input-container">
+                    <div className="flight-input-container">
                         <label htmlFor="adults">Adults </label>
-                        <input className="flight-input" type="number" min="1" value={userFlightDetails[0].adults} onChange={handleAdultsInput} />
+                        <input className="flight-input" type="number" min="1" value={userFlightDetails.adults} onChange={handleAdultsInput} />
                     </div>
 
                     <Button variant="outlined" type="submit" value="Search" >SEARCH</Button>

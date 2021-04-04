@@ -57,7 +57,7 @@ const Attraction = ({ attraction }) => {
             <CardActions>
                 <Button size="small" color="primary"> Share </Button>
                 <Button size="small" color="primary"> Learn More </Button>
-                <Button size="small" color="primary"><a href={attraction.bookingLink} target="_blank"> Book Now <FontAwesomeIcon icon={faExternalLinkAlt} /></a></Button>
+                <Button size="small" color="primary"><a href={attraction.bookingLink} target="_blank" rel="noreferrer"> Book Now <FontAwesomeIcon icon={faExternalLinkAlt} /></a></Button>
             </CardActions>
         </Card>
     )
