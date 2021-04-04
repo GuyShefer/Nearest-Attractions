@@ -11,19 +11,15 @@ import { useHistory } from "react-router-dom";
 const SearchFlight = () => {
 
     const [userFlightDetails, setUserFlightDetails] = useState([{ originCode: '', destinationCode: '', departureDate: '', returnDate: '', adults: 1 }]);
-    const [departureAirPort, setDepartureAirPort] = useState('');
-    const [destinationAirPort, setDestinationAirPort] = useState('');
+    const [departureAirPort, setDepartureAirPort] = useState(''); //
+    const [destinationAirPort, setDestinationAirPort] = useState(''); // 
     const [showSpinner, setShowSpinner] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [modalText, setModalText] = useState('');
     const history = useHistory();
 
-    // useEffect(() => {
-    //     console.log('spinner', showSpinner);
-
-    // })
-
-    const getFlights = async () => {
+    const getFlights = async (e) => {
+        e.preventDefault();
         setShowSpinner(true);
         let flightsResponse;
         try {
@@ -40,9 +36,10 @@ const SearchFlight = () => {
                 setModalText("There are no flights according to the details entered, let's try other details");
                 setOpenModal(true)
             } else {
-                const propsArr = [flightsResponse.data, departureAirPort , destinationAirPort] ;
-                console.log(propsArr);
-                history.push("/flights-data", propsArr);
+                // const propsArr = [flightsResponse.data, departureAirPort , destinationAirPort] ;
+                // console.log(userFlightDetails[0].originCode);
+                // console.log(propsArr);
+                history.push("/flights-data", flightsResponse.data);
             }
 
         } catch (err) {
@@ -88,12 +85,12 @@ const SearchFlight = () => {
         setUserFlightDetails([flightDetails])
     }
 
-    const handleSubmit = (e) => { // change it to get flights
-        e.preventDefault();
-        console.log('submit');
-        console.log(userFlightDetails);
-        getFlights();
-    }
+    // const handleSubmit = (e) => { // change it to get flights
+    //     e.preventDefault();
+    //     console.log('submit');
+    //     console.log(userFlightDetails);
+    //     getFlights();
+    // }
 
     const handleClose = () => {
         setOpenModal(false);
@@ -113,7 +110,7 @@ const SearchFlight = () => {
             </div>
 
             <div className="flight-container">
-                <form onSubmit={handleSubmit} className="form">
+                <form onSubmit={getFlights} className="form">
                     {showSpinner ? <div> <Spinner /> </div> : null}
                     <div className="banner">
                         <h2>Let the journey begin</h2>

@@ -1,7 +1,7 @@
 
 .found-flights-container {
     min-height: 80vh;
-    background: #989898;
+    /* background: #989898; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -11,11 +11,135 @@
 .flight-info {
     width: 90vw;
     height: 160px;
-    background: #fff;
-    border: 1px solid;
-    border-radius: 15px;
-    margin: 10px 0;
+    border: 2px dashed #989898;
+    margin: 20px 0;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px;
 }
+
+
+.ticket-info {
+    height: 100%;
+    border-radius: 15px;
+    display: flex;
+    margin: 0 10px;
+    min-width: 40%;
+}
+
+.left-ticket {
+    min-width: 70%;
+    height: 100%;
+    border-radius: 15px 15px 0 15px ;
+    background: #F0F0F0;
+}
+
+.right-ticket {
+    width: 30%;
+    height: 100%;
+    border-radius: 15px 15px 15px 0;
+    position: relative;
+    background: #F0F0F0;
+}
+
+.dashed-ticket{
+    border-left: 2px dashed gray;
+    position: absolute;
+    top: 8%;
+    bottom: 0;
+}
+ 
+.ticket-header {
+    width: 100%;
+    height: 25%;
+    background: #2962ff;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.ticket-header span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.radius-left {
+    border-radius: 15px 0 0 0 ;
+}
+.radius-right {
+    border-radius: 15px 15px 0 0 ;
+}
+
+.main-ticket {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 40%;
+}
+
+.main-ticket .main-item {
+    height: 100%;
+    width: 20%;
+    margin: 0 2px;
+    font-size: 2.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.airplane-icon {
+    background: url('/src/images/airplane-icons.png') no-repeat center center;
+}
+
+.footer-ticket {
+    align-items: center;
+    text-align: left;
+    font-size: 14px;
+    width: 100%;
+    height: 30%;
+    border-bottom-left-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-ticket span {
+    color: #131313;
+    font-weight: 700;
+    padding: 4px;
+}
+
+.mini-icon {
+    width: 50px;
+    height: 50px;
+    background: url('/src/images/mini-airplane-icon.png') no-repeat center center;
+}
+
+.right-ticket-main {
+    display: flex;
+    flex-direction: column;
+    height: 75%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.favorite-icon {
+    background: url('/src/images/travel.png') no-repeat center center/cover;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+}
+
+/* //// */
 
 .single-direction {
     height: 50%;

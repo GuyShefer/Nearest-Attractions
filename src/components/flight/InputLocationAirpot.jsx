@@ -19,7 +19,7 @@ const InputLocationAirpot = ({ setLocation, input }) => {
         }
 
         Apca.onSuccess = (data) => {
-            console.log(data.airports)
+            // console.log(data.airports)
             setAirports(data.airports)
         };
 
