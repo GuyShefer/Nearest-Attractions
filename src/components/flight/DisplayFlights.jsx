@@ -8,25 +8,29 @@ const DisplayFlights = (props) => {
 
     const airLabsKey = '48d9567c-e55c-4804-8ac4-b7ad7c36a6f6';
 
-    const [flights, setFlights] = useState();
+    const [flights, setFlights] = useState(props.location.statey
+        );
     const [originAirPort, setOriginAirPort] = useState('');
     const [destinationAirPort, setDestinationAirPort] = useState('');
 
     useEffect(() => {
-        setFlights(props.location.state);
+        setFlights();
+
+        const getAirportsName = async () => {
+            if (flights) {
+                const departureCode = flights[0].itineraries[0].segments[0].departure.iataCode;
+                const arrivalCode = flights[0].itineraries[0].segments[0].arrival.iataCode;
+                const departureName = await axios.get(`http://airlabs.co/api/v6/airports?api_key=${airLabsKey}&code=${departureCode}`);
+                const arrivalName = await axios.get(`http://airlabs.co/api/v6/airports?api_key=${airLabsKey}&code=${arrivalCode}`)
+                setOriginAirPort(departureName.data.response[0].name);
+                setDestinationAirPort(arrivalName.data.response[0].name);
+            }
+        }
+
         getAirportsName();
     }, [flights])
 
-    const getAirportsName = async () => {
-        if (flights) {
-            const departureCode = flights[0].itineraries[0].segments[0].departure.iataCode;
-            const arrivalCode = flights[0].itineraries[0].segments[0].arrival.iataCode;
-            const departureName = await axios.get(`http://airlabs.co/api/v6/airports?api_key=${airLabsKey}&code=${departureCode}`);
-            const arrivalName = await axios.get(`http://airlabs.co/api/v6/airports?api_key=${airLabsKey}&code=${arrivalCode}`)
-            setOriginAirPort(departureName.data.response[0].name);
-            setDestinationAirPort(arrivalName.data.response[0].name);
-        }
-    }
+    
 
     const addFlightToFavorite = (flight) => {
         let favoriteFlights = JSON.parse(localStorage.getItem('flights'));

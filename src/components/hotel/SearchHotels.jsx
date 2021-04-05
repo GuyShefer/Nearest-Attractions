@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './SearchHotels.css'
 import Button from '@material-ui/core/Button';
+import axios from 'axios'
 
 const SearchHotels = () => {
+
+    const positionStackKey = 'b25a203890086671c907d193fdcceebf';
+    const key = '48d9567c-e55c-4804-8ac4-b7ad7c36a6f6';
 
     const [userHotelDetails, setUserHotelDetails] = useState({ cityCode: '', latitude: '', longitude: '', checkInDate: '', checkOutDate: '', adults: 1 });
 
@@ -11,13 +15,23 @@ const SearchHotels = () => {
             console.log(userHotelDetails);
     }
 
-    const setCityName = (e) => {
+    const handleCityName = (e) => {
         let hotelDetails = {...userHotelDetails};
         hotelDetails.cityCode = e.target.value;
-        // have to conver the city name to citycode and latitdue &longitude
-        // use api :
-        // http://api.positionstack.com/v1/forward?access_key=b25a203890086671c907d193fdcceebf&query=rosh haayin
+        setCityInfo(e.target.value);
         setUserHotelDetails(hotelDetails)
+    }
+
+    const setCityInfo = async (cityName) => {
+        console.log(cityName);
+        const cityLongAndLatitude = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackKey}&query=${cityName}`);
+        const cityObj = cityLongAndLatitude.data;
+        console.log('CityObj', cityObj);
+
+        const cityCode = await axios.get(`http://airlabs.co/api/v6/autocomplete?query=${cityName}&api_key=${key}`);
+        console.log('cityCode : ', cityCode);
+
+        
     }
 
     const setCheckInDate = (e) => {
@@ -49,7 +63,7 @@ const SearchHotels = () => {
 
                     <div className="hotel-input-container">
                         <label htmlFor="city">City </label>
-                        <input className="hotel-input" placeholder="e.g. Amsterdam" type="text"  value={userHotelDetails.cityCode} onChange={setCityName} />
+                        <input className="hotel-input" placeholder="e.g. Amsterdam" type="text"  value={userHotelDetails.cityCode} onChange={handleCityName} />
                     </div>
 
                     <div className="hotel-input-container">
