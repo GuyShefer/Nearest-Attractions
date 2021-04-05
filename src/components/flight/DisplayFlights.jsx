@@ -8,13 +8,11 @@ const DisplayFlights = (props) => {
 
     const airLabsKey = '48d9567c-e55c-4804-8ac4-b7ad7c36a6f6';
 
-    const [flights, setFlights] = useState(props.location.statey
-        );
+    const [flights, setFlights] = useState(props.location.state);
     const [originAirPort, setOriginAirPort] = useState('');
     const [destinationAirPort, setDestinationAirPort] = useState('');
 
     useEffect(() => {
-        setFlights();
 
         const getAirportsName = async () => {
             if (flights) {
