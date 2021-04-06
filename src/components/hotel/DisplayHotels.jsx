@@ -5,12 +5,11 @@ import Map from '../main/Map';
 
 const DisplayHotels = (props) => {
 
-    const [hotels, setHotels] = useState(props.location.state);
+    const hotels = props.location.state
     const [openModal, setOpenModal] = useState(false);
     const [displayHotelLocation, setDisplayHotelLocation] = useState({});
 
     const getHotelLocationAndDisplayModal = (location) => {
-        console.log(location)
         setDisplayHotelLocation(location)
         setOpenModal(true)
     }
@@ -21,9 +20,6 @@ const DisplayHotels = (props) => {
 
     return (
         <>
-            {console.log(props.location.state)}
-            {console.log(displayHotelLocation)}
-
             {openModal !== false ?
                 <div>
                     <Dialog open={openModal} onClose={handleClose} aria-labelledby="alert-dialog-title" maxWidth="false" >
