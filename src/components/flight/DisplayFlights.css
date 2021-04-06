@@ -1,7 +1,6 @@
 
 .found-flights-container {
     min-height: 80vh;
-    /* background: #989898; */
     display: flex;
     flex-direction: column;
     justify-content: center;

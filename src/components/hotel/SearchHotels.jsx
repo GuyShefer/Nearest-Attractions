@@ -67,13 +67,13 @@ const SearchHotels = () => {
                 // longitude: Number(userHotelDetails.longitude),
                 // radius: 5,
                 // radiusUnit: 'KM'
-                // checkInDate: userHotelDetails.checkInDate,
-                // checkOutDate: userHotelDetails.checkOutDate,
+                checkInDate: userHotelDetails.checkInDate,
+                checkOutDate: userHotelDetails.checkOutDate,
                 // adults: Number(userHotelDetails.adults),
 
             })
             if (hotelsResponse.data.length === 0) {
-                setModalText("There are no flights according to the details entered, let's try other details");
+                setModalText("There are no hotels according to the details entered, let's try other details");
                 setOpenModal(true)
             } else {
                 history.push("/hotels-data", hotelsResponse.data);

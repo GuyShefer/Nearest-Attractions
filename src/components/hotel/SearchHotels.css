@@ -37,3 +37,26 @@
     box-shadow: 0 0 20px 0 #095484;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.display-hotels-title {
+    font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+	font-style: italic;
+    color: #1e151f;
+    font-size: 60px;
+}
+
+.found-hotels-container {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+}
+
+.hotel-info {
+    border-radius: 50px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    margin: 20px;
+}
