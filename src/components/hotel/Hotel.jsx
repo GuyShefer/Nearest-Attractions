@@ -24,6 +24,12 @@ const Hotel = (hotel) => {
         hotel.displayLocation({ latitude: hotel.hotel.hotel.latitude, longitude: hotel.hotel.hotel.longitude });
     }
 
+    const addToLocal = () =>{
+        const hotelsArr = JSON.parse(localStorage.getItem('hotels')) || [];
+        hotelsArr.push(hotel)
+        localStorage.setItem('hotels', JSON.stringify(hotelsArr));
+    }
+
 
     return (
 
@@ -49,9 +55,7 @@ const Hotel = (hotel) => {
                 </CardContent>
 
                 <CardActions>
-                    <Button size="small" color="primary">
-                        Save
-                    </Button>
+                    <Button size="small" color="primary" onClick={addToLocal}> Save </Button>
                     <Button color="inherit" onClick={diaplyOnMap}>Show On Map</Button>
                 </CardActions>
             </Card>

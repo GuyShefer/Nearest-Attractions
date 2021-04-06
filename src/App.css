@@ -28,22 +28,6 @@
   background: forestgreen;
 }
 
-.header {
-  height: 10vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  color: #131313;
-  font-weight: 700;
-  font-size: 1.75rem;
-  background: transparent;
-}
-
-.header .menu {
-  display: flex;
-  width: 20%;
-  justify-content: space-evenly;
-}
 
 .vactions-container {
    margin: 40px;

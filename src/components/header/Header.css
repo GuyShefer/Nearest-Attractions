@@ -1,0 +1,31 @@
+.header {
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #131313;
+    font-weight: 700;
+    font-size: 1.75rem;
+    background: transparent;
+  }
+  
+  .header .menu {
+    display: flex;
+    width: 20%;
+    justify-content: space-evenly;
+  }
+  
+
+.header .logo {
+    padding-left: 50px;
+    width: 140px;
+    height: 80px;
+    background: url('/src/images/logo.png') center center;
+    background-size: 220px;
+    cursor: pointer;
+}
+
+.text-link {
+    color: inherit;
+    text-decoration: inherit;
+}
