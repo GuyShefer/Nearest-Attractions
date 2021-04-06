@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import currency_symbols from '../../utilities/currency_symbols';
 
+
 const useStyles = makeStyles({
     root: {
         width: 450,
@@ -19,7 +20,13 @@ const Hotel = (hotel) => {
     const classes = useStyles();
     const currency = currency_symbols[hotel.currency]
 
+    const diaplyOnMap = () => {
+        hotel.displayLocation({ latitude: hotel.hotel.hotel.latitude, longitude: hotel.hotel.hotel.longitude });
+    }
+
+
     return (
+
         <>
             <Card className={classes.root}>
                 <CardHeader
@@ -45,7 +52,7 @@ const Hotel = (hotel) => {
                     <Button size="small" color="primary">
                         Save
                     </Button>
-                    <Button color="inherit">Show On Map</Button>
+                    <Button color="inherit" onClick={diaplyOnMap}>Show On Map</Button>
                 </CardActions>
             </Card>
 

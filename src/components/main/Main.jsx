@@ -1,5 +1,5 @@
-import React, { } from 'react'
-// import Amadeus from 'amadeus'
+import React from 'react'
+// import amadeus from 'amadeus'
 // import Attraction from './Attraction';
 import './Main.css'
 // import Map from './Map';
@@ -24,7 +24,7 @@ const Main = () => {
     //             response = JSON.parse(response);
     //         }
 
-    //         setAttractions(response.data)
+    //         // setAttractions(response.data)
     //         console.log(response.data)
 
     //     })();

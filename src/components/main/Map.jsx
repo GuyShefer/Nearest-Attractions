@@ -1,21 +1,22 @@
 import React from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
-const Map = ({ userLocation }) => {
+const Map = ({ location }) => {
 
     return (
         <>
             {
-                <MapContainer center={[userLocation.latitude, userLocation.longitude]} zoom={13} scrollWheelZoom={false}>
-                    <TileLayer
-                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <Marker position={[userLocation.latitude, userLocation.longitude]}>
-                        <Popup>You Are Here!</Popup>
-                    </Marker>
-                </MapContainer>
-
+                location ?
+                    <MapContainer center={[location.latitude, location.longitude]} zoom={13} scrollWheelZoom={false} style={{margin: '0px'}}>
+                        <TileLayer
+                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker position={[location.latitude, location.longitude]}>
+                            <Popup>Hotel is Here!</Popup>
+                        </Marker>
+                    </MapContainer>
+                    : null
             }
         </>
     )
