@@ -29,3 +29,7 @@
     color: inherit;
     text-decoration: inherit;
 }
+
+.header-link:hover {
+    color: darkgreen;
+}

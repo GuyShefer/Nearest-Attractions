@@ -2,11 +2,10 @@ import React from 'react'
 // import amadeus from 'amadeus'
 // import Attraction from './Attraction';
 import './Main.css'
-// import Map from './Map';
 import { Link } from 'react-router-dom';
 
 const Main = () => {
-    // const [userLocation, setUserLocation] = useState({});
+
     // const [attractions, setAttractions] = useState([])
 
     // useEffect(() => {
@@ -30,32 +29,13 @@ const Main = () => {
     //     })();
     // }, [])
 
-    // const getUserLocation = () => {
-    //     "geolocation" in navigator ?
-    //         navigator.geolocation.getCurrentPosition((position) => {
-    //             console.log(position)
-    //             setUserLocation({
-    //                 latitude: position.coords.latitude,
-    //                 longitude: position.coords.longitude
-    //             })
-    //         }) :
-    //         console.log('not avaialble') // have to call a function to get the location details from the user or set one by him
-    // }
-
 
     return (<>
         <div className="vactions-container">
-            <div className="search search-flight"><Link to="/flight">Search A Flight</Link></div>
-            <div className="search search-hotel"><Link to="/hotels">Seach Hotel</Link></div>
-            <div className="search search-atrractions">Seach For Attractions</div>
+            <Link className="text-link search" to="/flight"><div className="search search-flight"><div className="overlay">FLIGHTS</div></div></Link>
+            <Link className="text-link search" to="/hotels"><div className="search search-hotels">HOTELS</div></Link>
+            <Link className="text-link search" to="/attractions"><div className="search search-attractions">ATTRACTIONS</div></Link>
         </div>
-
-        {/* <div className="map-container">
-            {Object.keys(userLocation).length !== 0 ?
-                <Map userLocation={userLocation} /> :
-                null
-            }
-        </div> */}
 
         {/* <div className="attraction-container">
             {attractions.map(attraction => {
