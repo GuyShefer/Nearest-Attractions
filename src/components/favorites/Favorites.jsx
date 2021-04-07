@@ -49,7 +49,7 @@ const Favorites = () => {
     const deleteAttractionFromFavorites = (attraction) => {
         const attractions = JSON.parse(localStorage.getItem('attractionData'));
         for (let i = 0; i < attractions.length; i++) {
-            if (attractions[i].id = attraction.id) {
+            if (attractions[i].id === attraction.id) {
                 attractions.splice(i, 1);
             }
         }
