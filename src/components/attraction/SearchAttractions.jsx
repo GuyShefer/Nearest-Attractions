@@ -4,6 +4,7 @@ import axios from 'axios';
 import amadeus from '../../utilities/amadeus';
 import Attraction from './Attraction';
 import { FormControl, InputLabel, OutlinedInput } from '@material-ui/core';
+import Pagination from './Pagination'
 
 const cityDetails = { latitude: '', longitude: '' }
 
@@ -12,6 +13,9 @@ const SearchAttractions = () => {
     const [userInput, setUserInput] = useState('');
     const [userCityLocation, setUserCityLocation] = useState(cityDetails);
     const [attractions, setAttractions] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [attractionsPerPage] = useState(3);
+
     const positionStackKey = 'b25a203890086671c907d193fdcceebf';
 
     useEffect(() => {
@@ -54,6 +58,13 @@ const SearchAttractions = () => {
 
     }, [userCityLocation])
 
+    // get current attractions
+    const indexOfLastAttraction = currentPage * attractionsPerPage;
+    const indexOfFirstAttraction = indexOfLastAttraction - attractionsPerPage; // 0
+    const currentAttractions = attractions.slice(indexOfFirstAttraction, indexOfLastAttraction);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
     return (
         <>
             <div className="attractions-container">
@@ -65,10 +76,11 @@ const SearchAttractions = () => {
                 </div>
 
                 <div className="attractions-field">
-                    {attractions.map(attraction => {
+                    {currentAttractions.map(attraction => {
                         return <Attraction key={attraction.id} attraction={attraction} />
                     })}
                 </div>
+                    <Pagination attractionsPerPage={attractionsPerPage} totalAttractions={attractions.length} paginate={paginate}/>
             </div>
         </>
     )

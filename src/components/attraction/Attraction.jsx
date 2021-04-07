@@ -19,7 +19,7 @@ const useStyles = makeStyles({
         maxWidth: 400,
     },
     media: {
-        height: 240,
+        height: 260,
     },
 });
 
@@ -41,7 +41,7 @@ const Attraction = ({ attraction }) => {
     return (
         <Card className={classes.root}>
             <CardActionArea>
-                <CardHeader title={attraction.name} style={{ maxHeight: '60px', minHeight: '60px' }} />
+                <CardHeader title={attraction.name}  />
                 <CardMedia className={classes.media} image={attraction.pictures[0]} />
 
                 <CardContent>
