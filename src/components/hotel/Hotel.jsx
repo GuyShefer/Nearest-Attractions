@@ -25,9 +25,13 @@ const Hotel = (hotel) => {
     }
 
     const addToLocal = () =>{
-        const hotelsArr = JSON.parse(localStorage.getItem('hotels')) || [];
+        const hotelsArr = JSON.parse(localStorage.getItem('hotelsData')) || [];
         hotelsArr.push(hotel)
-        localStorage.setItem('hotels', JSON.stringify(hotelsArr));
+        localStorage.setItem('hotelsData', JSON.stringify(hotelsArr));
+    }
+
+    const deleteHotelFromLocal = () => {
+        hotel.deleteHotel(hotel);
     }
 
 
@@ -46,17 +50,18 @@ const Hotel = (hotel) => {
                     </Typography>
                     <hr />
                     <Typography variant="body2" component="p" >
-                        Price {hotel.price} {currency}
+                        Price {hotel.price /2} {currency}
                     </Typography>
                     <hr />
                     <Typography variant="body2" color="textSecondary" component="p">
-                        <div> Address : {hotel.address}</div>
+                         Address : {hotel.address}
                     </Typography>
                 </CardContent>
 
                 <CardActions>
                     <Button size="small" color="primary" onClick={addToLocal}> Save </Button>
-                    <Button color="inherit" onClick={diaplyOnMap}>Show On Map</Button>
+                    {hotel.favorite ? <Button color="warning" onClick={deleteHotelFromLocal}>Delete</Button> : 
+                    <Button color="inherit" onClick={diaplyOnMap}>Show On Map</Button>}
                 </CardActions>
             </Card>
 

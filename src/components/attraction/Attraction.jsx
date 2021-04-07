@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     },
 });
 
-const Attraction = ({ attraction }) => {
+const Attraction = ({ attraction, favorite, deleteAttraction }) => {
 
     const classes = useStyles();
 
@@ -37,11 +37,17 @@ const Attraction = ({ attraction }) => {
         return stars;
     }
 
+    const saveAttration = (attraction) => {
+        const localData = JSON.parse(localStorage.getItem('attractionData')) || [];
+        localData.push(attraction)
+        console.log(localData);
+        localStorage.setItem('attractionData', JSON.stringify(localData));
+    }
 
     return (
         <Card className={classes.root}>
             <CardActionArea>
-                <CardHeader title={attraction.name}  />
+                <CardHeader title={attraction.name} />
                 <CardMedia className={classes.media} image={attraction.pictures[0]} />
 
                 <CardContent>
@@ -55,8 +61,10 @@ const Attraction = ({ attraction }) => {
             </CardActionArea>
 
             <CardActions>
-                <Button size="small" color="primary"> SAVE </Button>
-                <Button size="small" color="primary"><a href={attraction.bookingLink} target="_blank" rel="noreferrer"> Book Now <FontAwesomeIcon icon={faExternalLinkAlt} /></a></Button>
+                <Button size="small" color="primary" onClick={() => saveAttration(attraction)}> SAVE </Button>
+                {favorite ? <Button size="small" color="secondary" onClick={() => deleteAttraction(attraction)}>Delete</Button> :
+                    <Button size="small" color="primary"><a href={attraction.bookingLink} target="_blank" rel="noreferrer"> Book Now <FontAwesomeIcon icon={faExternalLinkAlt} /></a></Button>
+                }
             </CardActions>
         </Card>
     )

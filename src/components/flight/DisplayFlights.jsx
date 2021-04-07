@@ -28,14 +28,12 @@ const DisplayFlights = (props) => {
         getAirportsName();
     }, [flights])
 
-    
+
 
     const addFlightToFavorite = (flight) => {
-        let favoriteFlights = JSON.parse(localStorage.getItem('flights'));
-        favoriteFlights ?
-            favoriteFlights.push(flight) :
-            favoriteFlights = [flight];
-        localStorage.setItem('flights', JSON.stringify(favoriteFlights));
+        const favoriteFlights = JSON.parse(localStorage.getItem('flightsData')) || [];
+        favoriteFlights.push({...flight, originAirPort, destinationAirPort})
+        localStorage.setItem('flightsData', JSON.stringify(favoriteFlights));
     }
 
     return (
@@ -44,7 +42,6 @@ const DisplayFlights = (props) => {
             <h2 className="display-flights-title">SEARCH RESULTS</h2>
             <div className="found-flights-container">
                 {
-
                     flights ? flights.map((flight, index) => {
                         return <div key={index}>
                             <div className="flight-info" >
@@ -75,8 +72,7 @@ const DisplayFlights = (props) => {
                                     currency={currency_symbols[flight.price.currency]}
                                 />
 
-                                <div className="favorite-icon" onClick={() => addFlightToFavorite(flight)}> </div>
-
+                                <div className="btn btn-success" onClick={() => addFlightToFavorite(flight)}>Save</div>
                             </div>
                         </div>
                     }) : null

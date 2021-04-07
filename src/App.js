@@ -1,6 +1,7 @@
 import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import SearchAttractions from './components/attraction/SearchAttractions';
+import Favorites from './components/favorites/Favorites';
 import DisplayFlights from './components/flight/DisplayFlights';
 import SearchFlight from './components/flight/SearchFlight';
 import Footer from './components/footer/Footer';
@@ -21,6 +22,7 @@ function App() {
           <Route path="/hotels" exact component={SearchHotels} />
           <Route path="/hotels-data" exact component={DisplayHotels} />
           <Route path="/attractions" exact component={SearchAttractions} />
+          <Route path="/favorites" exact component={Favorites} />
         </div>
         <Footer />
       </BrowserRouter>

@@ -41,7 +41,7 @@ const DisplayHotels = (props) => {
                             price={hotel.offers[0].price.total}
                             currency={hotel.offers[0].price.currency}
                             address={hotel.hotel.address.lines}
-                            displayLocation = {getHotelLocationAndDisplayModal}
+                            displayLocation={getHotelLocationAndDisplayModal}
                         />
                     </div>
                 }) : null
