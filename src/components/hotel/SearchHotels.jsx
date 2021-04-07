@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner/HotelSpinner';
 
 const hotelDetails = { cityName: '', cityCode: '', latitude: '', longitude: '', checkInDate: '', checkOutDate: '', adults: 1 };
 
@@ -37,7 +37,7 @@ const SearchHotels = () => {
                 tempUserHotelDetails.cityName = cityObj.label;
                 tempUserHotelDetails.cityCode = cityCode.data.response.cities[0].code;
                 tempUserHotelDetails.latitude = cityObj.latitude;
-                tempUserHotelDetails.longitude = cityObj.latitude;
+                tempUserHotelDetails.longitude = cityObj.longitude;
                 console.log(tempUserHotelDetails);
                 setUserHotelDetails(tempUserHotelDetails)
             } catch (err) { }
