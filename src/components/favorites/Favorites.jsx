@@ -77,9 +77,6 @@ const Favorites = () => {
                 <input type="button" className="btn btn-info" value="My Attractions" onClick={displayAttractionsHandler} />
             </div>
 
-            {console.log(attractions)}
-            {/* {console.log('f', flights, 'h', hotels, 'a', attractions)} */}
-
             <div className="favorites-container">
                 {
                     flights && displayFlights ? flights.map((flight, index) => {
