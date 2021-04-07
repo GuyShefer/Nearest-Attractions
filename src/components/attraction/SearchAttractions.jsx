@@ -4,7 +4,8 @@ import axios from 'axios';
 import amadeus from '../../utilities/amadeus';
 import Attraction from './Attraction';
 import { FormControl, InputLabel, OutlinedInput } from '@material-ui/core';
-import Pagination from './Pagination'
+import Pagination from './Pagination';
+import Spinner from '../Spinner/RegSpinner';
 
 const cityDetails = { latitude: '', longitude: '' }
 
@@ -15,6 +16,7 @@ const SearchAttractions = () => {
     const [attractions, setAttractions] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [attractionsPerPage] = useState(3);
+    const [showSpinner, setShowSpinner] = useState(true);
 
     const positionStackKey = 'b25a203890086671c907d193fdcceebf';
 
@@ -33,6 +35,7 @@ const SearchAttractions = () => {
         const timeOutId = setTimeout(() => {
             if (userInput) {
                 getCityLocation();
+                setShowSpinner(true);
             }
         }, 1200);
 
@@ -55,7 +58,7 @@ const SearchAttractions = () => {
                 } catch (err) { }
             }
         })()
-
+        setShowSpinner(false);
     }, [userCityLocation])
 
     // get current attractions
@@ -67,6 +70,9 @@ const SearchAttractions = () => {
 
     return (
         <>
+            <div className="reg-spin">
+                {showSpinner ? <div> <Spinner /> </div> : null}
+            </div>
             <div className="attractions-container">
                 <div className="city-input">
                     <FormControl variant="outlined">
@@ -74,13 +80,12 @@ const SearchAttractions = () => {
                         <OutlinedInput id="component-outlined" value={userInput} onChange={(e) => setUserInput(e.target.value)} label="SEARCH ATTRACTIONS IN " />
                     </FormControl>
                 </div>
-
                 <div className="attractions-field">
                     {currentAttractions.map(attraction => {
                         return <Attraction key={attraction.id} attraction={attraction} />
                     })}
                 </div>
-                    <Pagination attractionsPerPage={attractionsPerPage} totalAttractions={attractions.length} paginate={paginate}/>
+                <Pagination attractionsPerPage={attractionsPerPage} totalAttractions={attractions.length} paginate={paginate} />
             </div>
         </>
     )
