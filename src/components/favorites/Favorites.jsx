@@ -21,7 +21,6 @@ const Favorites = () => {
 
     // delete flights
     const deleteFlightFromFavorites = (flight) => {
-        console.log(flight);
         const flights = JSON.parse(localStorage.getItem('flightsData'));
         for (let i = 0; i < flights.length; i++) {
             if (flights[i].id === flight.id) {

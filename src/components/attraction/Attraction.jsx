@@ -40,7 +40,6 @@ const Attraction = ({ attraction, favorite, deleteAttraction }) => {
     const saveAttration = (attraction) => {
         const localData = JSON.parse(localStorage.getItem('attractionData')) || [];
         localData.push(attraction)
-        console.log(localData);
         localStorage.setItem('attractionData', JSON.stringify(localData));
     }
 

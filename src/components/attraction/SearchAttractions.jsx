@@ -24,10 +24,7 @@ const SearchAttractions = () => {
 
         const getCityLocation = async () => {
             if (userInput !== null) {
-                console.log('input :', userInput);
                 const cityLocation = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackKey}&query=${userInput}`);
-                console.log(cityLocation.data.data[0].latitude);
-                console.log(cityLocation.data.data[0].longitude);
                 setUserCityLocation({ latitude: cityLocation.data.data[0].latitude, longitude: cityLocation.data.data[0].longitude })
             }
         }

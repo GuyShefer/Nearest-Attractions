@@ -38,7 +38,6 @@ const SearchHotels = () => {
                 tempUserHotelDetails.cityCode = cityCode.data.response.cities[0].code;
                 tempUserHotelDetails.latitude = cityObj.latitude;
                 tempUserHotelDetails.longitude = cityObj.longitude;
-                console.log(tempUserHotelDetails);
                 setUserHotelDetails(tempUserHotelDetails)
             } catch (err) { }
         }
@@ -58,7 +57,6 @@ const SearchHotels = () => {
     const getHotels = async (e) => {
         e.preventDefault();
         setShowSpinner(true);
-        console.log(userHotelDetails);
         let hotelsResponse;
         try {
             hotelsResponse = await amadeus.shopping.hotelOffers.get({

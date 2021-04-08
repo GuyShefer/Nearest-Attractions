@@ -22,7 +22,6 @@ const InputLocationAirpot = ({ setLocation, input }) => {
         };
 
         Apca.onError = (data) => {
-            console.log('onError', data.message);
         };
     }
 
